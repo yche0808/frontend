@@ -4,7 +4,7 @@ import MapView from "../views/MapView.vue";
 import AccessibilityView from "../views/AccessibilityView.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: "/",
@@ -22,6 +22,9 @@ const router = createRouter({
       component: AccessibilityView,
     },
   ],
+  scrollBehavior() {
+    return { top: 0 };
+  },
 });
 
 export default router;
