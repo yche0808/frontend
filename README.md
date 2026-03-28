@@ -26,7 +26,8 @@ This repo includes an automatic deploy workflow:
 1. Go to **GitHub repo → Settings → Pages**
 2. In **Build and deployment**, set:
    - **Source**: `GitHub Actions`
-3. Merge this branch to `main` (or run workflow manually on `main`)
+3. Merge your feature branch to `main`
+4. The workflow will auto-deploy from `main`
 
 After deployment, your site URL will be:
 
