@@ -7,6 +7,36 @@ import { useInsightsStore } from "../stores/useInsightsStore";
 const route = useRoute();
 const insightsStore = useInsightsStore();
 
+const nearbySections = [
+  {
+    title: "Transit Hubs",
+    icon: "train",
+    items: [
+      { name: "South Yarra Station", distance: "400m" },
+      { name: "Hawksburn Station", distance: "1.2km" },
+      { name: "Route 58 Tram", distance: "200m" },
+    ],
+  },
+  {
+    title: "Parks",
+    icon: "park",
+    items: [
+      { name: "Royal Botanic Gardens", distance: "600m" },
+      { name: "Fawkner Park", distance: "800m" },
+      { name: "Como Park", distance: "1.4km" },
+    ],
+  },
+  {
+    title: "Supermarkets",
+    icon: "shopping_basket",
+    items: [
+      { name: "Woolworths South Yarra", distance: "300m" },
+      { name: "Prahran Market", distance: "900m" },
+      { name: "ALDI Chapel St", distance: "500m" },
+    ],
+  },
+];
+
 const suburbCards = [
   {
     name: "St Kilda",
@@ -118,6 +148,126 @@ const suburbCards = [
             <span class="flex items-center gap-2">
               <span class="material-symbols-outlined text-sm">map</span> Neighborhood Insights
             </span>
+          </div>
+        </div>
+      </section>
+
+      <section class="relative z-30 mx-auto -mt-12 max-w-screen-2xl px-8 pb-24">
+        <div class="grid grid-cols-12 gap-8">
+          <div
+            class="col-span-12 rounded-xl border border-outline-variant/10 bg-surface-container-lowest p-12 shadow-sm lg:col-span-7"
+          >
+            <div class="flex flex-col items-start gap-12 md:flex-row">
+              <div class="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-secondary-container">
+                <span class="material-symbols-outlined text-4xl text-primary">auto_awesome</span>
+              </div>
+              <div>
+                <h2 class="mb-6 text-3xl font-bold tracking-tight text-on-surface">The Local Vibe</h2>
+                <p class="mb-8 text-lg leading-relaxed text-on-surface-variant">
+                  South Yarra isn't just a place to live; it's a statement. From the high-end boutiques
+                  of Chapel Street to the serene walking trails of the Royal Botanic Gardens, it offers a
+                  dual identity of high-energy fashion and peaceful sanctuary.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="rounded-lg bg-surface-container-low p-4">
+                    <span class="mb-1 block text-xs font-bold uppercase tracking-widest text-outline">
+                      Morning Ritual
+                    </span>
+                    <span class="font-semibold text-on-surface">Botanical Garden Jog</span>
+                  </div>
+                  <div class="rounded-lg bg-surface-container-low p-4">
+                    <span class="mb-1 block text-xs font-bold uppercase tracking-widest text-outline">
+                      Social Scene
+                    </span>
+                    <span class="font-semibold text-on-surface">Chapel St Precinct</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-12 flex flex-col justify-between rounded-xl bg-primary-container p-12 text-white lg:col-span-5">
+            <div>
+              <h2 class="mb-8 text-3xl font-bold tracking-tight">Neighborhood Scores</h2>
+              <div class="space-y-8">
+                <div v-for="score in insightsStore.neighborhoodScores" :key="score.label">
+                  <div class="mb-3 flex items-end justify-between">
+                    <span class="text-sm font-medium uppercase tracking-wide opacity-70">{{ score.label }}</span>
+                    <span class="text-2xl font-bold text-tertiary-fixed">{{ score.value }}</span>
+                  </div>
+                  <div class="h-1.5 w-full overflow-hidden rounded-full bg-white/10">
+                    <div class="h-full bg-tertiary-fixed" :style="{ width: `${score.value * 10}%` }" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-12 border-t border-white/10 pt-8">
+              <p class="text-sm italic opacity-60">
+                Scores curated based on accessibility, density of services, and community feedback.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-span-12 grid grid-cols-1 gap-6 md:grid-cols-3 lg:col-span-8">
+            <InsightCard
+              v-for="section in nearbySections"
+              :key="section.title"
+              :title="section.title"
+              :icon="section.icon"
+              :items="section.items"
+            />
+          </div>
+
+          <div
+            class="col-span-12 flex flex-col rounded-xl border border-outline-variant/10 bg-surface-container-lowest p-8 shadow-sm lg:col-span-4"
+          >
+            <h3 class="mb-8 text-2xl font-bold tracking-tight">Who Lives Here?</h3>
+            <div class="mb-10 flex items-center gap-6">
+              <div class="text-center">
+                <span class="mb-1 block text-4xl font-extrabold text-primary">32</span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-outline">Median Age</span>
+              </div>
+              <div class="h-12 w-px bg-outline-variant/30" />
+              <div class="text-center">
+                <span class="mb-1 block text-4xl font-extrabold text-primary">64%</span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-outline">Professionals</span>
+              </div>
+            </div>
+            <div class="space-y-6">
+              <div v-for="item in insightsStore.demographics" :key="item.label">
+                <div class="mb-2 flex justify-between text-xs font-bold uppercase tracking-widest text-outline-variant">
+                  <span>{{ item.label }}</span>
+                  <span>{{ item.value }}%</span>
+                </div>
+                <div class="h-1 rounded-full bg-surface-container-highest">
+                  <div class="h-full rounded-full bg-primary" :style="{ width: `${item.value}%` }" />
+                </div>
+              </div>
+            </div>
+            <button
+              class="mt-auto w-full rounded-lg bg-secondary-container py-4 text-sm font-bold tracking-wide text-on-secondary-fixed-variant transition-all duration-200 hover:bg-primary-fixed"
+            >
+              View Detailed Demographics
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="mx-auto mb-24 max-w-screen-2xl px-8">
+        <div class="relative h-96 overflow-hidden rounded-2xl shadow-xl transition-all duration-700 hover:grayscale-0">
+          <div class="pointer-events-none absolute inset-0 z-10 bg-primary/5"></div>
+          <img
+            alt="Map of South Yarra neighborhood"
+            class="h-full w-full object-cover grayscale"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvCEk0h8clPBLnaXBTvy6C6oRoW92Cgx9yWFeVbZ1PKnTktBwRhDahjLe9SccWWJpeLfqdtqIw2WAuqC8ZLMhkCXZ4jI8Msn2MBt44TZpIIfAbz8du9bDq4FP38xGazVoKtngY5LxxD2AbSO85_87z30_5Ppp2VoMdw27FPy_yjpkYVMmEl7kFDmF8F9mJI9OfDuD8oeeDvKvZnD7tQliGUqXGrNQio8edtjBLG6jZserbqwIz3xF0TUGnhaPD6gMO4TsF1XzZnPwl"
+          />
+          <div class="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2">
+            <div
+              class="flex items-center gap-2 rounded-full border-2 border-tertiary-fixed bg-surface-container-lowest px-4 py-2 shadow-2xl"
+            >
+              <span class="h-2 w-2 rounded-full bg-tertiary-fixed"></span>
+              <span class="text-xs font-bold text-on-surface">Explore Listings</span>
+            </div>
           </div>
         </div>
       </section>
