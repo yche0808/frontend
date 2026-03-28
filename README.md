@@ -1,5 +1,37 @@
-# Vue 3 + Vite
+# Yarra Vista
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Yarra Vista is a Vue 3 + Vite multi-page style web experience with:
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+- Explore page (`/`)
+- Map page (`/map`)
+- Compare page (`/compare`)
+
+## Local development
+
+```bash
+npm install
+npm run dev
+```
+
+## One-click deploy (GitHub Pages)
+
+This repo includes an automatic deploy workflow:
+
+- file: `.github/workflows/deploy-gh-pages.yml`
+- trigger: push to `main` (and manual run)
+- output: static site deployed to GitHub Pages
+
+### First-time setup
+
+1. Go to **GitHub repo → Settings → Pages**
+2. In **Build and deployment**, set:
+   - **Source**: `GitHub Actions`
+3. Merge this branch to `main` (or run workflow manually on `main`)
+
+After deployment, your site URL will be:
+
+- `https://<your-github-username>.github.io/<repo-name>/`
+
+For this repository, that is expected to be:
+
+- `https://yche0808.github.io/frontend/`
